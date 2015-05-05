@@ -1,0 +1,35 @@
+DinnerTime\Infrastructure\DoctrineBridgeBundle\Entity\Restaurant:
+    type: entity
+    table: restaurant
+    repositoryClass: DinnerTime\Infrastructure\DoctrineBridgeBundle\Repository\RestaurantRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        restaurantName:
+            type: string
+            length: 32
+            notblank: true
+            unique: true
+            column: name
+        streetName:
+            type: string
+            length: 122
+            column: street_name
+        streetNumber:
+            type: string
+            length: 32
+            column: street_number
+        city:
+            type: string
+            length: 122
+        country:
+            type: string
+            length: 122
+    oneToMany:
+      menuCards:
+        targetEntity: DinnerTime\Infrastructure\DoctrineBridgeBundle\Entity\MenuCard
+        mappedBy: restaurant
+        cascade: ["persist"]

@@ -1,0 +1,10 @@
+.idea
+/vendor/
+/bin/
+/app/cache/
+/app/logs/
+/web/bundles/
+/app/config/parameters.yml
+/vagrant/.vagrant/
+/vagrant/provisioning/variables.yml
+/vagrant/Vagrantfile

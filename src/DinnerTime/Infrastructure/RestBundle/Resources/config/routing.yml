@@ -1,0 +1,9 @@
+restaurants:
+    type: rest
+    resource: rest.restaurants.controller
+
+menucards:
+    type: rest
+    parent: restaurants
+    resource: rest.menu_cards.controller
+

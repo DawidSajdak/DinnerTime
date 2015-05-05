@@ -1,0 +1,8 @@
+default:
+    suites:
+        guest:
+            contexts:
+                - RestaurantContext
+                - MenuCardContext
+            paths:
+                features: %paths.base%/features/Guest

@@ -1,0 +1,50 @@
+services:
+    rest.restaurants.controller:
+        class: DinnerTime\Infrastructure\RestBundle\Controller\RestaurantsController
+        arguments:
+          - @use_case.create_project
+          - @form.factory
+          - @repository.restaurants
+
+    rest.menu_cards.controller:
+        class: DinnerTime\Infrastructure\RestBundle\Controller\MenuCardsController
+        arguments:
+          - @use_case.add_new_menu_card_to_restaurant
+          - @form.factory
+
+    use_case.create_project:
+        class: DinnerTime\Application\UseCase\CreateRestaurantCommandHandler
+        arguments:
+            - @repository.restaurants
+            - @factory.restaurant
+
+    use_case.add_new_menu_card_to_restaurant:
+        class: DinnerTime\Application\UseCase\AddNewMenuCardToRestaurantCommandHandler
+        arguments:
+            - @repository.restaurants
+            - @factory.menu_card
+
+    repository.restaurants:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - DinnerTime\Infrastructure\DoctrineBridgeBundle\Entity\Restaurant
+
+    form.restaurant:
+        class:           Symfony\Component\Form\FormInterface
+        factory_service: form.factory
+        factory_method:  create
+        arguments:
+            - @form_type.restaurant
+            - []
+
+    form_type.restaurant:
+        class: DinnerTime\Infrastructure\RestBundle\Form\RestaurantType
+
+    factory.restaurant:
+        class: DinnerTime\Infrastructure\RestBundle\Factory\RestaurantFactory
+
+    factory.menu_card:
+        class: DinnerTime\Infrastructure\RestBundle\Factory\MenuCardFactory
+

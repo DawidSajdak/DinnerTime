@@ -1,0 +1,4 @@
+_rest:
+    resource: "@DinnerTimeRestBundle/Resources/config/routing.yml"
+    prefix:   /api
+    type: rest

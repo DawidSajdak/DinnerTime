@@ -1,0 +1,23 @@
+DinnerTime\Infrastructure\DoctrineBridgeBundle\Entity\MenuCard:
+    type: entity
+    table: menu_card
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        title:
+            type: string
+            length: 32
+            notblank: true
+            unique: true
+            column: title
+    manyToOne:
+      restaurant:
+        targetEntity: DinnerTime\Infrastructure\DoctrineBridgeBundle\Entity\Restaurant
+        inversedBy: menuCards
+        joinColumn:
+          name: restaurant_id
+          referencedColumnName: id
+        cascade: ["persist"]
