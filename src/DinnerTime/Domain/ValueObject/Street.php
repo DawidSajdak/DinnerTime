@@ -1,6 +1,6 @@
 <?php
 
-namespace DinnerTime\Domain;
+namespace DinnerTime\Domain\ValueObject;
 
 use DinnerTime\Domain\Exception\InvalidArgumentException;
 

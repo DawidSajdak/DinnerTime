@@ -1,10 +1,10 @@
 <?php
 
 use Behat\Behat\Context\SnippetAcceptingContext;
-use DinnerTime\Domain\Address;
 use DinnerTime\Domain\MenuCard;
 use DinnerTime\Domain\Restaurant;
-use DinnerTime\Domain\Street;
+use DinnerTime\Domain\ValueObject\Address;
+use DinnerTime\Domain\ValueObject\Street;
 
 /**
  * Class MenuCardContext
@@ -32,7 +32,7 @@ class MenuCardContext implements SnippetAcceptingContext
      */
     public function iCreateTheMenuCard($menuCardTitle)
     {
-        $this->restaurant->addMenuCardToRestaurant(new MenuCard($this->restaurant, $menuCardTitle));
+        $this->restaurant->createMenuCardForRestaurant($menuCardTitle);
     }
 
     /**
@@ -55,7 +55,7 @@ class MenuCardContext implements SnippetAcceptingContext
         $this->restaurant = new Restaurant("Test", $address);
 
         for ($i = 0; $i < $arg1; $i++) {
-            $this->restaurant->addMenuCardToRestaurant(new MenuCard($this->restaurant, "Test " . $i));
+            $this->restaurant->createMenuCardForRestaurant("Test " . $i);
         }
     }
 

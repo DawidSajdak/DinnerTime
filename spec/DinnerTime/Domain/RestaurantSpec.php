@@ -2,10 +2,12 @@
 
 namespace spec\DinnerTime\Domain;
 
-use DinnerTime\Domain\Address;
 use DinnerTime\Domain\Exception\InvalidArgumentException;
 use DinnerTime\Domain\MenuCard;
-use DinnerTime\Domain\Street;
+use DinnerTime\Domain\ValueObject\Address;
+use DinnerTime\Domain\ValueObject\City;
+use DinnerTime\Domain\ValueObject\Country;
+use DinnerTime\Domain\ValueObject\Street;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -14,7 +16,7 @@ class RestaurantSpec extends ObjectBehavior
     function let()
     {
         $street = new Street("igielna", "3");
-        $address = new Address($street, "Jasło", "Polska");
+        $address = new Address($street, new City("Jasło"), new Country("Polska"));
         $this->beConstructedWith("Mała Chatka", $address);
     }
 
@@ -39,7 +41,7 @@ class RestaurantSpec extends ObjectBehavior
     function it_throw_exception_when_restaurant_name_is_not_a_string()
     {
         $street = new Street("igielna", "3");
-        $address = new Address($street, "Jasło", "Polska");
+        $address = new Address($street, new City("Jasło"), new Country("Polska"));
 
         $this->shouldThrow(new InvalidArgumentException("Restaurant name must be a valid string."))->during("__construct", [123, $address]);
     }
@@ -47,7 +49,7 @@ class RestaurantSpec extends ObjectBehavior
     function it_throw_exception_when_restaurant_name_has_less_than_three_letters()
     {
         $street = new Street("igielna", "3");
-        $address = new Address($street, "Jasło", "Polska");
+        $address = new Address($street, new City("Jasło"), new Country("Polska"));
 
         $this->shouldThrow(new InvalidArgumentException("Restaurant name must have at least 3 letters."))->during("__construct", ["a", $address]);
     }
@@ -56,10 +58,10 @@ class RestaurantSpec extends ObjectBehavior
     {
         $menuCard->getTitle()->willReturn("Test");
 
-        $this->getMenuCardList()->isEmpty()->shouldBe(true);
-        $this->addMenuCardToRestaurant($menuCard);
-        $this->getMenuCardList()->isEmpty()->shouldBe(false);
-        $this->getMenuCardList()->count()->shouldBe(1);
+        $this->getMenuCardList()->shouldBe([]);
+        $this->createMenuCardForRestaurant("Test");
+        $this->getMenuCardList()->shouldNotBe([]);
+        $this->getMenuCardList()->shouldHaveCount(1);
 
         $this->hasMenuCard($menuCard)->shouldBe(true);
     }

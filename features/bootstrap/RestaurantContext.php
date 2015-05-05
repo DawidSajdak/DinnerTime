@@ -1,10 +1,10 @@
 <?php
 
 use Behat\Behat\Context\SnippetAcceptingContext;
-use DinnerTime\Domain\Address;
-use DinnerTime\Domain\Restaurant;
-use DinnerTime\Domain\Street;
 use DinnerTime\Application\Restaurant\InMemoryRestaurantRepository;
+use DinnerTime\Domain\Restaurant;
+use DinnerTime\Domain\ValueObject\Address;
+use DinnerTime\Domain\ValueObject\Street;
 
 /**
  * Class RestaurantContext

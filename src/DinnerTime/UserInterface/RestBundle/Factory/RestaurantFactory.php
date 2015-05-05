@@ -1,18 +1,20 @@
 <?php
 
-namespace DinnerTime\Infrastructure\RestBundle\Factory;
+namespace DinnerTime\UserInterface\RestBundle\Factory;
 
 use DinnerTime\Application\Command;
 use DinnerTime\Application\Factory\RestaurantFactory as BaseRestaurantFactory;
 use DinnerTime\Application\Command\CreateRestaurantCommand;
-use DinnerTime\Domain\Address;
-use DinnerTime\Domain\Street;
+use DinnerTime\Domain\ValueObject\Address;
+use DinnerTime\Domain\ValueObject\City;
+use DinnerTime\Domain\ValueObject\Country;
+use DinnerTime\Domain\ValueObject\Street;
 use DinnerTime\Infrastructure\DoctrineBridgeBundle\Entity\Restaurant;
 
 /**
  * Class RestaurantFactory
  *
- * @package DinnerTime\Infrastructure\RestBundle\Factory
+ * @package DinnerTime\UserInterface\RestBundle\Factory
  */
 class RestaurantFactory implements BaseRestaurantFactory
 {
@@ -24,7 +26,7 @@ class RestaurantFactory implements BaseRestaurantFactory
     public function createRestaurant(Command $data)
     {
         /** @var CreateRestaurantCommand $data */
-        $address = new Address(new Street($data->streetName, $data->streetNumber), $data->city, $data->country);
+        $address = new Address(new Street($data->streetName, $data->streetNumber), new City($data->city), new Country($data->country));
         return new Restaurant($data->restaurantName, $address);
     }
 }

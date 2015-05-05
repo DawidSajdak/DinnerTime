@@ -1,13 +1,13 @@
 services:
     rest.restaurants.controller:
-        class: DinnerTime\Infrastructure\RestBundle\Controller\RestaurantsController
+        class: DinnerTime\UserInterface\RestBundle\Controller\RestaurantsController
         arguments:
           - @use_case.create_project
           - @form.factory
           - @repository.restaurants
 
     rest.menu_cards.controller:
-        class: DinnerTime\Infrastructure\RestBundle\Controller\MenuCardsController
+        class: DinnerTime\UserInterface\RestBundle\Controller\MenuCardsController
         arguments:
           - @use_case.add_new_menu_card_to_restaurant
           - @form.factory
@@ -22,7 +22,6 @@ services:
         class: DinnerTime\Application\UseCase\AddNewMenuCardToRestaurantCommandHandler
         arguments:
             - @repository.restaurants
-            - @factory.menu_card
 
     repository.restaurants:
         class: Doctrine\ORM\EntityRepository
@@ -40,11 +39,7 @@ services:
             - []
 
     form_type.restaurant:
-        class: DinnerTime\Infrastructure\RestBundle\Form\RestaurantType
+        class: DinnerTime\UserInterface\RestBundle\Form\RestaurantType
 
     factory.restaurant:
-        class: DinnerTime\Infrastructure\RestBundle\Factory\RestaurantFactory
-
-    factory.menu_card:
-        class: DinnerTime\Infrastructure\RestBundle\Factory\MenuCardFactory
-
+        class: DinnerTime\UserInterface\RestBundle\Factory\RestaurantFactory

@@ -1,6 +1,6 @@
 <?php
 
-namespace DinnerTime\Domain;
+namespace DinnerTime\Domain\ValueObject;
 
 use DinnerTime\Domain\Exception\InvalidArgumentException;
 
@@ -17,7 +17,7 @@ final class Address
     private $street;
 
     /**
-     * @var String
+     * @var City
      */
     private $city;
 
@@ -27,23 +27,15 @@ final class Address
     private $country;
 
     /**
-     * @param Street $street
-     * @param string $city
-     * @param string $country
+     * @param Street  $street
+     * @param City    $city
+     * @param Country $country
+     *
      * @throws InvalidArgumentException
      */
-    public function __construct(Street $street, $city, $country)
+    public function __construct(Street $street, City $city, Country $country)
     {
         $this->street   = $street;
-
-        if (!is_string($city)) {
-            throw new InvalidArgumentException("City must be a valid string.");
-        }
-
-        if (!is_string($country)) {
-            throw new InvalidArgumentException("Country must be a valid string.");
-        }
-
         $this->city     = $city;
         $this->country  = $country;
     }
@@ -61,7 +53,7 @@ final class Address
      */
     public function getCity()
     {
-        return $this->city;
+        return (string) $this->city;
     }
 
     /**
@@ -69,7 +61,7 @@ final class Address
      */
     public function getCountry()
     {
-        return $this->country;
+        return (string) $this->country;
     }
 
     public function __toString()

@@ -1,6 +1,6 @@
 <?php
 
-namespace DinnerTime\Infrastructure\RestBundle;
+namespace DinnerTime\UserInterface\RestBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

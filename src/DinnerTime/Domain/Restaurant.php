@@ -2,8 +2,11 @@
 
 namespace DinnerTime\Domain;
 
-use DinnerTime\Domain\Adapter\ArrayCollection;
 use DinnerTime\Domain\Exception\InvalidArgumentException;
+use DinnerTime\Domain\ValueObject\Address;
+use DinnerTime\Domain\ValueObject\City;
+use DinnerTime\Domain\ValueObject\Country;
+use DinnerTime\Domain\ValueObject\Street;
 
 /**
  * Class Restaurant
@@ -38,9 +41,9 @@ class Restaurant
     protected $country;
 
     /**
-     * @var ArrayCollection|MenuCard[]
+     * @var MenuCard[]
      */
-    protected $menuCards;
+    protected $menuCards = [];
 
     /**
      * @param string $restaurantName
@@ -59,8 +62,6 @@ class Restaurant
 
         $this->restaurantName = $restaurantName;
         $this->setRestaurantAddress($restaurantAddress);
-
-        $this->menuCards = new ArrayCollection();
     }
 
     /**
@@ -78,15 +79,19 @@ class Restaurant
     {
         $street = new Street($this->streetName, $this->streetNumber);
 
-        return new Address($street, $this->city, $this->country);
+        return new Address($street, new City($this->city), new Country($this->country));
     }
 
     /**
-     * @param MenuCard $menuCard
+     * @param $title
      */
-    public function addMenuCardToRestaurant(MenuCard $menuCard)
+    public function createMenuCardForRestaurant($title)
     {
-        $this->menuCards->add($menuCard);
+        $menuCard = new MenuCard($this, $title);
+
+        if (!$this->hasMenuCard($menuCard)) {
+            $this->menuCards[$menuCard->getTitle()] = $menuCard;
+        }
     }
 
     /**
@@ -106,7 +111,7 @@ class Restaurant
     }
 
     /**
-     * @return ArrayCollection|MenuCard[]
+     * @return MenuCard[]
      */
     public function getMenuCardList()
     {

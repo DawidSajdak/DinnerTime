@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\DinnerTime\Domain;
+namespace spec\DinnerTime\Domain\ValueObject;
 
 use DinnerTime\Domain\Exception\InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
@@ -15,7 +15,7 @@ class StreetSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('DinnerTime\Domain\Street');
+        $this->shouldHaveType('DinnerTime\Domain\ValueObject\Street');
     }
 
     function it_has_a_street_name()

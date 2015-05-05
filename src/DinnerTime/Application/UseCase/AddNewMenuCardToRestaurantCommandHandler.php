@@ -21,18 +21,11 @@ final class AddNewMenuCardToRestaurantCommandHandler implements CommandHandler
     private $repository;
 
     /**
-     * @var MenuCardFactory
-     */
-    private $menuCardFactory;
-
-    /**
      * @param RestaurantRepository $repository
-     * @param MenuCardFactory      $menuCardFactory
      */
-    public function __construct(RestaurantRepository $repository, MenuCardFactory $menuCardFactory)
+    public function __construct(RestaurantRepository $repository)
     {
         $this->repository = $repository;
-        $this->menuCardFactory = $menuCardFactory;
     }
 
     /**
@@ -42,11 +35,9 @@ final class AddNewMenuCardToRestaurantCommandHandler implements CommandHandler
      */
     public function handle(Command $command)
     {
-        $menuCard = $this->menuCardFactory->createMenuCard($command);
-
         /** @var Restaurant $restaurant */
         $restaurant = $command->restaurant;
-        $restaurant->addMenuCardToRestaurant($menuCard);
+        $restaurant->createMenuCardForRestaurant($command->title);
         $this->repository->add($restaurant);
     }
 }

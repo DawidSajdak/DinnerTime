@@ -1,11 +1,11 @@
 <?php
 
-namespace DinnerTime\Infrastructure\RestBundle\Controller;
+namespace DinnerTime\UserInterface\RestBundle\Controller;
 
 use DinnerTime\Application\Command\AddNewMenuCardToRestaurantCommand;
 use DinnerTime\Application\UseCase\AddNewMenuCardToRestaurantCommandHandler;
 use DinnerTime\Infrastructure\DoctrineBridgeBundle\Entity\Restaurant;
-use DinnerTime\Infrastructure\RestBundle\Form\MenuCardType;
+use DinnerTime\UserInterface\RestBundle\Form\MenuCardType;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class MenuCardsController
  *
- * @package DinnerTime\Infrastructure\RestBundle\Controller
+ * @package DinnerTime\UserInterface\RestBundle\Controller
  */
 class MenuCardsController extends Controller
 {

@@ -1,12 +1,12 @@
 <?php
 
-namespace DinnerTime\Infrastructure\RestBundle\Controller;
+namespace DinnerTime\UserInterface\RestBundle\Controller;
 
 use DinnerTime\Application\Command\CreateRestaurantCommand;
 use DinnerTime\Application\UseCase\CreateRestaurantCommandHandler;
 use DinnerTime\Infrastructure\DoctrineBridgeBundle\Entity\Restaurant;
 use DinnerTime\Infrastructure\DoctrineBridgeBundle\Repository\RestaurantRepository;
-use DinnerTime\Infrastructure\RestBundle\Form\RestaurantType;
+use DinnerTime\UserInterface\RestBundle\Form\RestaurantType;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
 use Symfony\Component\Form\FormFactoryInterface;

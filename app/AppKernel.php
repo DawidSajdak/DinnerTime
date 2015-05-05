@@ -17,7 +17,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new DinnerTime\Infrastructure\DoctrineBridgeBundle\DinnerTimeDoctrineBridgeBundle(),
-            new DinnerTime\Infrastructure\RestBundle\DinnerTimeRestBundle(),
+            new DinnerTime\UserInterface\RestBundle\DinnerTimeRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\RestBundle\FOSRestBundle(),
         );

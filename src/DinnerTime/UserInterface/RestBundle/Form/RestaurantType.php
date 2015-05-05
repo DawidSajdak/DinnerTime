@@ -1,6 +1,6 @@
 <?php
 
-namespace DinnerTime\Infrastructure\RestBundle\Form;
+namespace DinnerTime\UserInterface\RestBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 /**
  * Class RestaurantType
  *
- * @package DinnerTime\Infrastructure\RestBundle\Form
+ * @package DinnerTime\UserInterface\RestBundle\Form
  */
 class RestaurantType extends AbstractType
 {
