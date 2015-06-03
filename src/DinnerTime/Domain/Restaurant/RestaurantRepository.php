@@ -29,4 +29,9 @@ interface RestaurantRepository
      * @return Restaurant[]
      */
     public function getRestaurantsList();
+
+    /**
+     * @return RestaurantId
+     */
+    public function nextIdentity();
 }

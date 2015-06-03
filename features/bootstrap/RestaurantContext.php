@@ -1,9 +1,13 @@
 <?php
 
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Gherkin\Node\TableNode;
 use DinnerTime\Application\Restaurant\InMemoryRestaurantRepository;
 use DinnerTime\Domain\Restaurant;
+use DinnerTime\Domain\Restaurant\RestaurantId;
 use DinnerTime\Domain\ValueObject\Address;
+use DinnerTime\Domain\ValueObject\City;
+use DinnerTime\Domain\ValueObject\Country;
 use DinnerTime\Domain\ValueObject\Street;
 
 /**
@@ -26,14 +30,16 @@ class RestaurantContext implements SnippetAcceptingContext
     }
 
     /**
-     * @When I create the :restaurantName restaurant
+     * @When /^I create restaurant with following data:$/
      */
-    public function iCreateTheRestaurant($restaurantName)
+    public function iCreateRestaurantWithFollowingData(TableNode $table)
     {
+        $restaurantData = $table->getRow(1);
+
         try {
-            $street = new Street("igielna", "3");
-            $address = new Address($street, "Jasło", "Polska");
-            $restaurant = new Restaurant($restaurantName, $address);
+            $street = new Street($restaurantData[1], $restaurantData[2]);
+            $address = new Address($street, new City($restaurantData[3]), new Country($restaurantData[4]));
+            $restaurant = new Restaurant(new RestaurantId(), $restaurantData[0], $address);
             $this->restaurantRepository->add($restaurant);
         } catch (\Exception $e) {
         }
@@ -67,8 +73,8 @@ class RestaurantContext implements SnippetAcceptingContext
     {
         for ($i = 0; $i < $numberOfRestaurants; $i++) {
             $street = new Street("igielna", "3");
-            $address = new Address($street, "Jasło", "Polska");
-            $restaurant = new Restaurant("Test " . $i, $address);
+            $address = new Address($street, new City("Jasło"), new Country("Polska"));
+            $restaurant = new Restaurant(new RestaurantId(), "Test " . $i, $address);
             $this->restaurantRepository->add($restaurant);
         }
     }

@@ -78,3 +78,5 @@ fos_rest:
         failed_validation: HTTP_BAD_REQUEST
     routing_loader:
         default_format: json
+
+nelmio_api_doc: ~

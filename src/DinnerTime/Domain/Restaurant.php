@@ -3,6 +3,8 @@
 namespace DinnerTime\Domain;
 
 use DinnerTime\Domain\Exception\InvalidArgumentException;
+use DinnerTime\Domain\MenuCard\MenuCardId;
+use DinnerTime\Domain\Restaurant\RestaurantId;
 use DinnerTime\Domain\ValueObject\Address;
 use DinnerTime\Domain\ValueObject\City;
 use DinnerTime\Domain\ValueObject\Country;
@@ -15,6 +17,11 @@ use DinnerTime\Domain\ValueObject\Street;
  */
 class Restaurant
 {
+    /**
+     * @var
+     */
+    protected $id;
+
     /**
      * @var String
      */
@@ -43,14 +50,16 @@ class Restaurant
     /**
      * @var MenuCard[]
      */
-    protected $menuCards = [];
+    protected $menuCards;
 
     /**
-     * @param string $restaurantName
-     * @param Address $restaurantAddress
+     * @param RestaurantId $id
+     * @param string       $restaurantName
+     * @param Address      $restaurantAddress
+     *
      * @throws InvalidArgumentException
      */
-    public function __construct($restaurantName, Address $restaurantAddress)
+    public function __construct(RestaurantId $id, $restaurantName, Address $restaurantAddress)
     {
         if (!is_string($restaurantName)) {
             throw new InvalidArgumentException("Restaurant name must be a valid string.");
@@ -60,6 +69,8 @@ class Restaurant
             throw new InvalidArgumentException("Restaurant name must have at least 3 letters.");
         }
 
+        $this->id = $id;
+        $this->menuCards = new ArrayCollection();
         $this->restaurantName = $restaurantName;
         $this->setRestaurantAddress($restaurantAddress);
     }
@@ -87,10 +98,10 @@ class Restaurant
      */
     public function createMenuCardForRestaurant($title)
     {
-        $menuCard = new MenuCard($this, $title);
+        $menuCard = new MenuCard(new MenuCardId(), $this, $title);
 
         if (!$this->hasMenuCard($menuCard)) {
-            $this->menuCards[$menuCard->getTitle()] = $menuCard;
+            $this->menuCards->set($menuCard->getTitle(), $menuCard);
         }
     }
 
@@ -101,7 +112,8 @@ class Restaurant
      */
     public function hasMenuCard(MenuCard $menuCard)
     {
-        foreach ($this->menuCards as $menuCardItem) {
+        /** @var MenuCard $menuCardItem */
+        foreach ($this->menuCards->toArray() as $menuCardItem) {
             if ($menuCardItem->getTitle() === $menuCard->getTitle()) {
                 return true;
             }

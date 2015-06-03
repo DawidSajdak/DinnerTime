@@ -2,6 +2,7 @@
 
 namespace spec\DinnerTime\Domain;
 
+use DinnerTime\Domain\MenuCard\MenuCardId;
 use DinnerTime\Domain\Restaurant;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -10,7 +11,7 @@ class MenuCardSpec extends ObjectBehavior
 {
     function let(Restaurant $restaurant)
     {
-        $this->beConstructedWith($restaurant, "Test");
+        $this->beConstructedWith(new MenuCardId(), $restaurant, "Test");
     }
 
     function it_should_correct_update_a_title()

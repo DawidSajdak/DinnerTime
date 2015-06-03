@@ -4,8 +4,8 @@ namespace DinnerTime\Application\UseCase;
 
 use DinnerTime\Application\Command;
 use DinnerTime\Application\CommandHandler;
-use DinnerTime\Application\Factory\MenuCardFactory;
 use DinnerTime\Domain\Restaurant;
+use DinnerTime\Domain\Restaurant\RestaurantDoesNotExistException;
 use DinnerTime\Domain\Restaurant\RestaurantRepository;
 
 /**
@@ -29,14 +29,20 @@ final class AddNewMenuCardToRestaurantCommandHandler implements CommandHandler
     }
 
     /**
-     * @param Command $command
+     * @param Command|Command\AddNewMenuCardToRestaurantCommand $command
      *
      * @return mixed
+     * @throws RestaurantDoesNotExistException
      */
     public function handle(Command $command)
     {
         /** @var Restaurant $restaurant */
         $restaurant = $command->restaurant;
+
+        if (!$this->repository->hasRestaurant($restaurant->getRestaurantName())) {
+            throw new RestaurantDoesNotExistException("restaurant does not exist.");
+        }
+
         $restaurant->createMenuCardForRestaurant($command->title);
         $this->repository->add($restaurant);
     }

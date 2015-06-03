@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new DinnerTime\UserInterface\RestBundle\DinnerTimeRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

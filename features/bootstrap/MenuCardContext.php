@@ -1,9 +1,14 @@
 <?php
 
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Gherkin\Node\TableNode;
+use DinnerTime\Domain\ArrayCollection;
 use DinnerTime\Domain\MenuCard;
 use DinnerTime\Domain\Restaurant;
+use DinnerTime\Domain\Restaurant\RestaurantId;
 use DinnerTime\Domain\ValueObject\Address;
+use DinnerTime\Domain\ValueObject\City;
+use DinnerTime\Domain\ValueObject\Country;
 use DinnerTime\Domain\ValueObject\Street;
 
 /**
@@ -15,16 +20,22 @@ class MenuCardContext implements SnippetAcceptingContext
      * @var Restaurant
      */
     private $restaurant;
+
+    /**
+     * @var ArrayCollection
+     */
     private $listOfMenuCards;
 
     /**
-     * @Given I have restaurant with name :restaurantName
+     * @Given /^I have restaurant with following data:$/
      */
-    public function iHaveRestaurantWithName($restaurantName)
+    public function iHaveRestaurantWithFollowingData(TableNode $table)
     {
-        $street = new Street("igielna", "3");
-        $address = new Address($street, "Jasło", "Polska");
-        $this->restaurant = new Restaurant($restaurantName, $address);
+        $restaurantData = $table->getRow(1);
+
+        $street = new Street($restaurantData[1], $restaurantData[2]);
+        $address = new Address($street, new City($restaurantData[3]), new Country($restaurantData[4]));
+        $this->restaurant = new Restaurant(new RestaurantId(), $restaurantData[0], $address);
     }
 
     /**
@@ -40,7 +51,7 @@ class MenuCardContext implements SnippetAcceptingContext
      */
     public function theManuCardShouldBeSaved($arg1)
     {
-        if (!$this->restaurant->hasMenuCard(new MenuCard($this->restaurant, $arg1))) {
+        if (!$this->restaurant->hasMenuCard(new MenuCard(new MenuCard\MenuCardId(), $this->restaurant, $arg1))) {
             throw new \Exception("Menu card does not exists");
         }
     }
@@ -51,8 +62,8 @@ class MenuCardContext implements SnippetAcceptingContext
     public function thereAreMenuCards($arg1)
     {
         $street = new Street("igielna", "3");
-        $address = new Address($street, "Jasło", "Polska");
-        $this->restaurant = new Restaurant("Test", $address);
+        $address = new Address($street, new City("Jasło"), new Country("Polska"));
+        $this->restaurant = new Restaurant(new RestaurantId(), "Test", $address);
 
         for ($i = 0; $i < $arg1; $i++) {
             $this->restaurant->createMenuCardForRestaurant("Test " . $i);
@@ -72,7 +83,7 @@ class MenuCardContext implements SnippetAcceptingContext
      */
     public function iShouldGetAListOfMenuCards($arg1)
     {
-        if (count($this->listOfMenuCards) !== intval($arg1)) {
+        if ($this->listOfMenuCards->count() !== intval($arg1)) {
             throw new \Exception(count($this->listOfMenuCards).' menu cards found.');
         }
     }
@@ -82,7 +93,7 @@ class MenuCardContext implements SnippetAcceptingContext
      */
     public function iShouldGetAnEmptyListOfMenuCards()
     {
-        if (count($this->listOfMenuCards) !== 0) {
+        if ($this->listOfMenuCards->count() !== 0) {
             throw new \Exception(count($this->listOfMenuCards).' menu cards found.');
         }
     }

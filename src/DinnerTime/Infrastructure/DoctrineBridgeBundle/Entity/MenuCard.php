@@ -11,5 +11,5 @@ use DinnerTime\Domain\MenuCard as BaseMenuCard;
  */
 class MenuCard extends BaseMenuCard
 {
-    protected $id;
+
 }

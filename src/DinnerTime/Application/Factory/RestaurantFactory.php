@@ -4,6 +4,7 @@ namespace DinnerTime\Application\Factory;
 
 use DinnerTime\Application\Command;
 use DinnerTime\Domain\Restaurant;
+use DinnerTime\Domain\Restaurant\RestaurantId;
 
 /**
  * Interface RestaurantFactory
@@ -13,9 +14,10 @@ use DinnerTime\Domain\Restaurant;
 interface RestaurantFactory
 {
     /**
-     * @param Command $command
+     * @param RestaurantId $restaurantId
+     * @param Command                 $command
      *
      * @return Restaurant
      */
-    public function createRestaurant(Command $command);
+    public function createRestaurant(RestaurantId $restaurantId, Command $command);
 }

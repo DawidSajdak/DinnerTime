@@ -5,7 +5,7 @@ namespace DinnerTime\Application\UseCase;
 use DinnerTime\Application\Command;
 use DinnerTime\Application\CommandHandler;
 use DinnerTime\Application\Factory\RestaurantFactory;
-use DinnerTime\Domain\Restaurant;
+use DinnerTime\Domain\Restaurant\RestaurantAlreadyExistsException;
 use DinnerTime\Domain\Restaurant\RestaurantRepository;
 
 /**
@@ -39,10 +39,19 @@ final class CreateRestaurantCommandHandler implements CommandHandler
      * @param Command $command
      *
      * @return mixed|void
+     * @throws RestaurantAlreadyExistsException
      */
     public function handle(Command $command)
     {
-        $restaurant = $this->restaurantFactory->createRestaurant($command);
+        if ($this->repository->hasRestaurant($command->restaurantName)) {
+            throw new RestaurantAlreadyExistsException("Restaurant already exists.");
+        }
+
+        $restaurant = $this->restaurantFactory->createRestaurant(
+            $this->repository->nextIdentity(),
+            $command
+        );
+
         $this->repository->add($restaurant);
     }
 }

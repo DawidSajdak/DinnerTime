@@ -5,10 +5,14 @@ Feature: Guest can create a restaurant
 
   Scenario: Successfully creating a restaurant with a name
     Given I am a guest
-    When I create the "Odessa" restaurant
+    When I create restaurant with following data:
+      | Restaurant name | Street name | Street number | City  | Country |
+      | Odessa          | Igielna     | 19            | Jasło | Polska  |
     Then the "Odessa" restaurant should be saved
 
   Scenario: Being unable to create a project with too short name
     Given I am a guest
-    When I create the "Od" restaurant
+    When I create restaurant with following data:
+      | Restaurant name | Street name | Street number | City  | Country |
+      | Od              | Igielna     | 19            | Jasło | Polska  |
     Then the "Od" restaurant should not be saved

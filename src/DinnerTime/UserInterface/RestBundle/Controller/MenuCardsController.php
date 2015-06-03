@@ -8,7 +8,7 @@ use DinnerTime\Infrastructure\DoctrineBridgeBundle\Entity\Restaurant;
 use DinnerTime\UserInterface\RestBundle\Form\MenuCardType;
 use FOS\RestBundle\Util\Codes;
 use FOS\RestBundle\View\View;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * @package DinnerTime\UserInterface\RestBundle\Controller
  */
-class MenuCardsController extends Controller
+class MenuCardsController
 {
     /**
      * @var AddNewMenuCardToRestaurantCommandHandler
@@ -40,14 +40,27 @@ class MenuCardsController extends Controller
     }
 
     /**
+     * @param Restaurant $restaurant
+     *
+     * @return \DinnerTime\Domain\MenuCard[]
+     */
+    public function getMenucardsAction(Restaurant $restaurant)
+    {
+        return $restaurant->getMenuCardList();
+    }
+
+    /**
+     * @ApiDoc(
+     *  description="Create a new Object",
+     *  formType="DinnerTime\UserInterface\RestBundle\Form\MenuCardType"
+     * )
      * @param Request    $request
      * @param Restaurant $restaurant
      *
-     * @return Restaurant
+     * @return View
      */
     public function postMenucardsAction(Request $request, Restaurant $restaurant)
     {
-
         $form = $this->formFactory->create(new MenuCardType(), new AddNewMenuCardToRestaurantCommand($restaurant));
         $form->submit($request->request->all());
 

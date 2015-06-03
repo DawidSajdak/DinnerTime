@@ -2,7 +2,9 @@
 
 namespace DinnerTime\Application\Restaurant;
 
+use DinnerTime\Domain\MenuCard;
 use DinnerTime\Domain\Restaurant;
+use DinnerTime\Domain\Restaurant\RestaurantId;
 use DinnerTime\Domain\Restaurant\RestaurantRepository;
 
 /**
@@ -42,5 +44,13 @@ class InMemoryRestaurantRepository implements RestaurantRepository
     public function getRestaurantsList()
     {
         return $this->restaurants;
+    }
+
+    /**
+     * @return RestaurantId
+     */
+    public function nextIdentity()
+    {
+        return new RestaurantId();
     }
 }

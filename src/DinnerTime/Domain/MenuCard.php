@@ -2,6 +2,8 @@
 
 namespace DinnerTime\Domain;
 
+use DinnerTime\Domain\MenuCard\MenuCardId;
+
 /**
  * Class MenuCard
  *
@@ -9,6 +11,11 @@ namespace DinnerTime\Domain;
  */
 class MenuCard
 {
+    /**
+     * @var MenuCardId
+     */
+    protected $id;
+
     /**
      * @var Restaurant
      */
@@ -20,13 +27,23 @@ class MenuCard
     protected $title;
 
     /**
+     * @param MenuCardId $menuCardId
      * @param Restaurant $restaurant
      * @param            $title
      */
-    public function __construct(Restaurant $restaurant, $title)
+    public function __construct(MenuCardId $menuCardId, Restaurant $restaurant, $title)
     {
+        $this->id = $menuCardId;
         $this->restaurant = $restaurant;
         $this->title = $title;
+    }
+
+    /**
+     * @return MenuCardId
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**

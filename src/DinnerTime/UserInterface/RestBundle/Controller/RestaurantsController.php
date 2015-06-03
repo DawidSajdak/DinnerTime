@@ -54,7 +54,7 @@ class RestaurantsController
      */
     public function getRestaurantsAction()
     {
-        return $this->repository->findAll();
+        return $this->repository->getRestaurantsList();
     }
 
     /**

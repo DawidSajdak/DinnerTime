@@ -3,6 +3,7 @@
 namespace DinnerTime\Infrastructure\DoctrineBridgeBundle\Repository;
 
 use DinnerTime\Domain\Restaurant;
+use DinnerTime\Domain\Restaurant\RestaurantId;
 use DinnerTime\Domain\Restaurant\RestaurantRepository as BaseRestaurantRepository;
 use Doctrine\ORM\EntityRepository;
 
@@ -40,8 +41,24 @@ class RestaurantRepository extends EntityRepository implements BaseRestaurantRep
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * @return array
+     */
     public function getRestaurantsList()
     {
-        // TODO: Implement getRestaurantsList() method.
+        $qb = $this->_em->createQueryBuilder();
+        $qb->add('select', 'r, mc')
+            ->add('from', 'DinnerTimeDoctrineBridgeBundle:Restaurant r')
+            ->leftJoin('r.menuCards', 'mc');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @return RestaurantId
+     */
+    public function nextIdentity()
+    {
+        return new RestaurantId();
     }
 }
