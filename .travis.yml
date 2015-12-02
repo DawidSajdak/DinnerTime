@@ -4,7 +4,6 @@ matrix:
   include:
     - php: 5.3
       env: DEPENDENCIES='low'
-    - php: 5.3
     - php: 5.4
     - php: 5.5
     - php: 5.6
