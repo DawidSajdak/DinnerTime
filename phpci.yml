@@ -10,8 +10,17 @@ setup:
     prefer_dist: false
 
 test:
-  php_mess_detector:
-    allowed_warnings: 0
-    rules:
-      - phpmd.xml
   php_spec:
+  php_mess_detector:
+      path: 'src'
+      ignore:
+        - 'vendor'
+      allowed_warnings: 0
+      rules:
+        - "cleancode"
+        - "controversial"
+        - "codesize"
+        - "design"
+        - "naming"
+        - "unusedcode"
+      zero_config: true
