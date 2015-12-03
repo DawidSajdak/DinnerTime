@@ -11,16 +11,5 @@ setup:
 
 test:
   php_spec:
-  php_mess_detector:
-      path: 'src'
-      ignore:
-        - 'vendor'
-      allowed_warnings: 0
-      rules:
-        - "cleancode"
-        - "controversial"
-        - "codesize"
-        - "design"
-        - "naming"
-        - "unusedcode"
-      zero_config: true
+  behat:
+        executable: "bin/behat"
