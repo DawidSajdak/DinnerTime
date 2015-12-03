@@ -1,12 +1,17 @@
 build_settings:
-    clone_depth: 1 # depth of 1 is a shallow clone, remove this line to clone entire repo
+  verbose: false
+  ignore:
+    - "vendor"
+    - "spec"
 
 setup:
-    composer:
-        action: "install"
+  composer:
+    action: "install"
+    prefer_dist: false
 
 test:
-    php_mess_detector:
-        allow_failures: true
-    php_spec:
-        
+  php_mess_detector:
+    allowed_warnings: 0
+    rules:
+      - phpmd.xml
+  php_spec:
