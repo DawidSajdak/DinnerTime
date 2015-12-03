@@ -1,0 +1,14 @@
+build_settings:
+    clone_depth: 1 # depth of 1 is a shallow clone, remove this line to clone entire repo
+
+setup:
+    composer:
+        action: "install"
+
+test:
+    php_mess_detector:
+        allow_failures: true
+    php_code_sniffer:
+        standard: "PSR2"
+    php_spec:
+        
