@@ -6,9 +6,5 @@ setup:
         action: "install"
 
 test:
-    php_mess_detector:
-        allow_failures: true
-    php_code_sniffer:
-        standard: "PSR2"
     php_spec:
         
